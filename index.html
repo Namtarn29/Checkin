@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Time Tracking</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background: radial-gradient(circle, #000428, #004e92);
+            color: white;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .container {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            padding: 20px;
+            text-align: center;
+            width: 300px;
+        }
+
+        .time {
+            font-size: 2em;
+            margin-bottom: 20px;
+        }
+
+        input[type="text"] {
+            width: calc(100% - 20px);
+            padding: 10px;
+            margin-bottom: 20px;
+            border: none;
+            border-radius: 5px;
+        }
+
+        button {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 10px;
+            border: none;
+            border-radius: 5px;
+            background: #6a11cb; /* Purple Gradient */
+            background: linear-gradient(90deg, #6a11cb 0%, #2575fc 100%);
+            color: white;
+            font-size: 1em;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background: #3b5998;
+        }
+
+        .confirm-container {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="container" id="input-container">
+        <div class="time">08:15 AM.</div>
+        <label for="employee-id">กรอกรหัสพนักงาน</label>
+        <input type="text" id="employee-id" placeholder="Employee ID">
+        <button onclick="logTime()">ลงเวลา</button>
+        <button onclick="goBack()">ย้อนกลับ</button>
+    </div>
+
+    <div class="container confirm-container" id="confirm-container">
+        <div class="time">08:15 AM.</div>
+        <div>ยืนยันการลงเวลา</div>
+        <div id="confirm-id"></div>
+    </div>
+
+    <script>
+        function logTime() {
+            const employeeId = document.getElementById('employee-id').value;
+            if (employeeId) {
+                document.getElementById('input-container').style.display = 'none';
+                document.getElementById('confirm-container').style.display = 'block';
+                document.getElementById('confirm-id').innerText = employeeId;
+            } else {
+                alert('กรุณากรอกรหัสพนักงาน');
+            }
+        }
+
+        function goBack() {
+            document.getElementById('employee-id').value = '';
+            document.getElementById('input-container').style.display = 'block';
+            document.getElementById('confirm-container').style.display = 'none';
+        }
+    </script>
+</body>
+</html>
