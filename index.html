@@ -65,7 +65,7 @@
 </head>
 <body>
     <div class="container" id="input-container">
-        <div class="time">08:15 AM.</div>
+        <div class="time" id="current-time"></div>
         <label for="employee-id">กรอกรหัสพนักงาน</label>
         <input type="text" id="employee-id" placeholder="Employee ID">
         <button onclick="logTime()">ลงเวลา</button>
@@ -73,18 +73,35 @@
     </div>
 
     <div class="container confirm-container" id="confirm-container">
-        <div class="time">08:15 AM.</div>
+        <div class="time" id="confirm-time"></div>
         <div>ยืนยันการลงเวลา</div>
         <div id="confirm-id"></div>
     </div>
 
     <script>
+        function updateTime() {
+            const now = new Date();
+            const hours = now.getHours().toString().padStart(2, '0');
+            const minutes = now.getMinutes().toString().padStart(2, '0');
+            const seconds = now.getSeconds().toString().padStart(2, '0');
+            const ampm = hours >= 12 ? 'PM' : 'AM';
+            const formattedTime = `${hours % 12 || 12}:${minutes}:${seconds} ${ampm}`;
+            document.getElementById('current-time').innerText = formattedTime;
+        }
+
         function logTime() {
             const employeeId = document.getElementById('employee-id').value;
             if (employeeId) {
+                const now = new Date();
+                const hours = now.getHours().toString().padStart(2, '0');
+                const minutes = now.getMinutes().toString().padStart(2, '0');
+                const ampm = hours >= 12 ? 'PM' : 'AM';
+                const formattedTime = `${hours % 12 || 12}:${minutes} ${ampm}`;
+                
                 document.getElementById('input-container').style.display = 'none';
                 document.getElementById('confirm-container').style.display = 'block';
                 document.getElementById('confirm-id').innerText = employeeId;
+                document.getElementById('confirm-time').innerText = formattedTime;
             } else {
                 alert('กรุณากรอกรหัสพนักงาน');
             }
@@ -95,6 +112,9 @@
             document.getElementById('input-container').style.display = 'block';
             document.getElementById('confirm-container').style.display = 'none';
         }
+
+        setInterval(updateTime, 1000);
+        updateTime();
     </script>
 </body>
 </html>
